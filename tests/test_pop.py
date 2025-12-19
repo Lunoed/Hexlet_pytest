@@ -1,16 +1,25 @@
-import pytest
+def fill(coll: list, value, begin=0, end=None):
+    if end is None:
+        end = len(coll)
+
+    length = len(coll)
+
+    if begin < 0:
+        begin = max(0, (begin + length))
+    if end < 0:
+        end = max(0, (end + length))
+
+    begin = max(0, min(begin, length))
+    end = max(0, min(end, length))
+    if begin >= end:
+        return coll
+    
+    for i in range(begin, end):
+        coll[i] = value
+
+    return coll
 
 
-def test_stak_with_pop():
-    stack = []
-    stack.append('one')
-    stack.append('two')
-    assert stack.pop() == 'two'
-    assert stack.pop() == 'one'
-
-
-def test_pop_with_empty_stack():
-    stack = []
-    assert not stack
-    with pytest.raises(IndexError):
-        stack.pop()
+collect = [1, 2, 3, 4]
+fill(collect, 'i', 1, 1000)
+print(collect)
